@@ -14,7 +14,7 @@ Make sure to edit the `network-config` if you are not using an ethernet connecti
 
 Additional resources on how to set up a Raspberry Pi with Ubuntu Server can be found [here](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview).
 
-### Install OpenFaas
+### Install OpenFaaS
 
 Install `faasd` using the following commands:
 ```bash
@@ -23,14 +23,16 @@ cd faasd
 ./hack/install.sh
 ```
 
-The default user for OpenFaas is `admin`. The password con be obtained using `sudo cat /var/lib/faasd/secrets/basic-auth-password`.
+The default user for OpenFaaS is `admin`. The password con be obtained using `sudo cat /var/lib/faasd/secrets/basic-auth-password`.
+
+OpenFaaS uses `containerd`. Make sure that there is no installation of Docker on the device. If you run into any problems, check if the system is up to date. Verify that `runc` is installed, as the `faasd` service won't run without it.
 
 
 ## Prerequisites
 
 - up-to-date installation of Docker
 
-## OpenFaas
+## OpenFaaS
 
 Install `faas-cli` to connect to the Raspberry Pi.
 
@@ -50,7 +52,7 @@ or
 curl -sSL https://cli.openfaas.com | sudo -E sh
 ```
 
-Connect to the OpenFaas server using `faas-cli login`. Every function has a dedicated `.yml` file located in `functions`. Those functions need to be cross-compiled for ARM based devices like the Raspberry Pi. After doing so, we can deploy the function to the device.
+Connect to the OpenFaaS server using `faas-cli login`. Every function has a dedicated `.yml` file located in `functions`. Those functions need to be cross-compiled for ARM based devices like the Raspberry Pi. After doing so, we can deploy the function to the device.
 
 Initially, we need to setup the utilities to do cross-compilation:
 ```sh
