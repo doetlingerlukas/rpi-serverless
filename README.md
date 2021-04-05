@@ -2,7 +2,7 @@
 
 Using a Raspberry Pi as an edge-device for serverless function execution.
 
-## Setup
+## Setup Raspberry Pi
 
 Follow these steps to initially setup the device.
 
@@ -14,7 +14,7 @@ Make sure to edit the `network-config` if you are not using an ethernet connecti
 
 Additional resources on how to set up a Raspberry Pi with Ubuntu Server can be found [here](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview).
 
-### faasd
+### Install OpenFaas
 
 Install `faasd` using the following commands:
 ```bash
@@ -25,3 +25,40 @@ cd faasd
 
 The default user for OpenFaas is `admin`. The password con be obtained using `sudo cat /var/lib/faasd/secrets/basic-auth-password`.
 
+
+## Prerequisites
+
+- up-to-date installation of Docker
+
+## OpenFaas
+
+Install `faas-cli` to connect to the Raspberry Pi.
+
+**Windows:**
+
+```pwsh
+scoop install faas-cli
+```
+
+**Linux and Mac OS:**
+
+```sh
+brew install faas-cli
+```
+or
+```sh
+curl -sSL https://cli.openfaas.com | sudo -E sh
+```
+
+Connect to the OpenFaas server using `faas-cli login`. Every function has a dedicated `.yml` file located in `functions`. Those functions need to be cross-compiled for ARM based devices like the Raspberry Pi. After doing so, we can deploy the function to the device.
+
+Initially, we need to setup the utilities to do cross-compilation:
+```sh
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+```
+
+Afterwards we can deploy a function using the following commands:
+```sh
+faas-cli publish -f function.yml --platforms linux/arm64
+faas-cli deploy -f function.yml
+```
