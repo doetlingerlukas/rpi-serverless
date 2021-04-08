@@ -52,15 +52,34 @@ or
 curl -sSL https://cli.openfaas.com | sudo -E sh
 ```
 
-Connect to the OpenFaaS server using `faas-cli login`. Every function has a dedicated `.yml` file located in `functions`. Those functions need to be cross-compiled for ARM based devices like the Raspberry Pi. After doing so, we can deploy the function to the device.
+Connect to the OpenFaaS server using `faas-cli login`. Every function has a dedicated `.yml` file located in `functions`.
+
+### Building a function
+
+Those functions need to be cross-compiled for ARM based devices like the Raspberry Pi. After doing so, we can deploy the function to the device. The compiled function is pushed to a docker registry after successful compilation. Make sure to set the correct prefix for the image in `<function>.yml`, otherwise pushing to the registry fails.
 
 Initially, we need to setup the utilities to do cross-compilation:
 ```sh
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 ```
 
-Afterwards we can deploy a function using the following commands:
+Afterwards we can publish a function using the following command:
 ```sh
 faas-cli publish -f function.yml --platforms linux/arm64
-faas-cli deploy -f function.yml
+```
+
+### Using prebuilt functions
+
+The images have already been built and published using the provided `.yml` file.
+
+### Deploying a function
+
+The function can be deployed using the following command:
+```sh
+faas-cli deploy -f <function>.yml --gateway http://<IP or URL>:8080
+```
+
+The function can be invoked using the `faas-cli`:
+```sh
+echo "<request>" | faas-cli invoke addition --gateway http://<IP or URL>:8080
 ```
