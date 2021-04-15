@@ -23,27 +23,22 @@ cd faasd
 ./hack/install.sh
 ```
 
-The default user for OpenFaaS is `admin`. The password con be obtained using `sudo cat /var/lib/faasd/secrets/basic-auth-password`.
+The default user for OpenFaaS is `admin`. The password can be obtained using `sudo cat /var/lib/faasd/secrets/basic-auth-password`.
 
 OpenFaaS uses `containerd`. Make sure that there is no installation of Docker on the device. If you run into any problems, check if the system is up to date. Verify that `runc` is installed, as the `faasd` service won't run without it.
 
+## Deploy Function
 
-## Prerequisites
-
-- up-to-date installation of Docker
-
-## OpenFaaS
+### OpenFaaS CLI
 
 Install `faas-cli` to connect to the Raspberry Pi.
 
 **Windows:**
-
 ```pwsh
 scoop install faas-cli
 ```
 
 **Linux and Mac OS:**
-
 ```sh
 brew install faas-cli
 ```
@@ -54,7 +49,32 @@ curl -sSL https://cli.openfaas.com | sudo -E sh
 
 Connect to the OpenFaaS server using `faas-cli login`. Every function has a dedicated `.yml` file located in `functions`.
 
+The provided `Rakefile` can be used to connect to the gateway using `rake login[<IP or URL>]`. The command requires the OpenFaaS password for the admin user to be saved in `faas-key.txt`. Alternatively a custom key file can be specified using `rake login[<IP or URL>, <path to file>]`.
+
+### Using prebuilt functions
+
+The images have already been built and published using the provided `.yml` file. These functions can be used without any additional configuration.
+
+### Deploying a function
+
+The function can be deployed using the rake task
+```sh
+rake deploy[<function>, <IP or URL>]
+```
+or a by using `faas-cli` directly
+```sh
+cd ./functions
+faas-cli deploy -f <function>.yml --gateway http://<IP or URL>:8080
+```
+
+The function can be invoked using the `faas-cli`:
+```sh
+echo "<request>" | faas-cli invoke addition --gateway http://<IP or URL>:8080
+```
+
 ### Building a function
+
+Functions can also be compiled and published. Therefore an up-to-date installation of Docker is required.
 
 Those functions need to be cross-compiled for ARM based devices like the Raspberry Pi. After doing so, we can deploy the function to the device. The compiled function is pushed to a docker registry after successful compilation. Make sure to set the correct prefix for the image in `<function>.yml`, otherwise pushing to the registry fails.
 
@@ -63,23 +83,12 @@ Initially, we need to setup the utilities to do cross-compilation:
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 ```
 
-Afterwards we can publish a function using the following command:
+Afterwards we can publish a function using the rake task
 ```sh
-faas-cli publish -f function.yml --platforms linux/arm64
+rake publish[<function>]
 ```
-
-### Using prebuilt functions
-
-The images have already been built and published using the provided `.yml` file.
-
-### Deploying a function
-
-The function can be deployed using the following command:
+or a by using `faas-cli` directly
 ```sh
-faas-cli deploy -f <function>.yml --gateway http://<IP or URL>:8080
-```
-
-The function can be invoked using the `faas-cli`:
-```sh
-echo "<request>" | faas-cli invoke addition --gateway http://<IP or URL>:8080
+cd ./functions
+faas-cli publish -f <function>.yml --platforms linux/arm64
 ```
