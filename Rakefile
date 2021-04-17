@@ -21,7 +21,7 @@ task :deploy, [:function, :gateway] do |function: '*', gateway: '127.0.0.1'|
   desc 'deploy a function to a gateway'
   Dir.chdir('functions') do
     Pathname.glob("#{function}.yml").each do |f|
-      sh 'faas-cli', 'deploy', '-f', f.to_s, '--pgateway', "http://#{gateway}:8080"
+      sh 'faas-cli', 'deploy', '-f', f.to_s, '--gateway', "http://#{gateway}:8080"
     end
   end
 end
