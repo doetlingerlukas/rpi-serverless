@@ -1,0 +1,10 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  monte-carlo-pi:
+    lang: python3
+    handler: ./monte-carlo-pi
+    image: doetlingerlukas/monte-carlo-pi-function:latest
+
