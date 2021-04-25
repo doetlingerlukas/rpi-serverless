@@ -4,9 +4,9 @@ Using a Raspberry Pi as an edge-device for serverless function execution.
 
 ## Quick Start
 
-- Setup the Raspberry Pi with either OpenFaaS or OpenWhisk (Guide can be found in the [Wiki](github.com/doetlingerlukas/rpi-serverless/wiki/Setup-Raspberry-Pi))
+- Setup the Raspberry Pi with either OpenFaaS or OpenWhisk (Guide can be found in the [Wiki](https://github.com/doetlingerlukas/rpi-serverless/wiki/Setup-Raspberry-Pi))
   - See next section on how to install the OpenFaaS CLI to deploy functions
-- [Deploy one of the provided functions](github.com/doetlingerlukas/rpi-serverless/wiki/Deploy-a-Function)
+- [Deploy one of the provided functions](https://github.com/doetlingerlukas/rpi-serverless/wiki/Deploy-a-Function)
 
 ## Install OpenFaaS CLI
 
