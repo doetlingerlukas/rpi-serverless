@@ -1,0 +1,13 @@
+config:
+  target: "http://10.60.20.131:8080/function"
+  phases:
+    - duration: 60
+      arrivalRate: 25
+
+scenarios:
+  - name: "addition function"
+    flow:
+      - post:
+          url: "/addition"
+          json:
+            benchmark: "true"
