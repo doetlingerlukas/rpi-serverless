@@ -12,7 +12,7 @@ task :publish, [:function] do |function: '*'|
   desc 'publish a function'
   Dir.chdir('functions') do
     Pathname.glob("#{function}.yml").each do |f|
-      sh 'faas-cli', 'publish', '-f', f.to_s, '--platforms', 'linux/arm64'
+      sh 'faas-cli', 'publish', '-f', f.to_s, '--platforms', 'linux/arm64,linux/arm,linux/amd64'
     end
   end
 end
