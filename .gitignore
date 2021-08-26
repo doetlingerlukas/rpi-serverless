@@ -1,7 +1,7 @@
 template
 build
 */.gradle/
-faas-key.txt
+faas-key
 
 # Python
 __pycache__
