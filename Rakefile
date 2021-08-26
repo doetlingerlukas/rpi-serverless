@@ -26,6 +26,35 @@ task :volume, [:path, :ssid, :psk] do |t, args|
   CFG
 end
 
+desc 'configures watchdog on raspberry pi'
+task :setup_watchdog do
+  ssh <<~SH
+    if ! dpkg -s watchdog >/dev/null; then
+      sudo apt-get update
+      sudo apt-get install -y watchdog
+    fi
+  SH
+
+  r, w = IO.pipe
+  w.puts 'bcm2835_wdt'
+  w.close
+
+  ssh 'sudo', 'tee', '/etc/modules-load.d/bcm2835_wdt.conf', in: r
+
+  r, w = IO.pipe
+  w.puts <<~CFG
+    watchdog-device	= /dev/watchdog
+    max-load-1 = 24
+  CFG
+  w.close
+
+  ssh 'sudo', 'tee', '/etc/watchdog.conf', in: r
+  ssh <<~SH
+    sudo systemctl enable watchdog
+    sudo systemctl start watchdog
+  SH
+end
+
 desc 'setup faasd on a raspberry pi'
 task :setup_openfaas do
   ssh <<~SH
@@ -47,7 +76,7 @@ end
 desc 'connect faas-cli to host'
 task :login do
   desc 'login to an OpenFaaS gateway'
-  Open3.pipeline ['faas-cli', 'login', '-u', 'admin', '-s', '--gateway', "http://#{RPI}:8080"], :in=>'faas-key'
+  sh 'faas-cli', 'login', '-u', 'admin', '-s', '--gateway', "http://#{RPI}:8080", :in=>'faas-key'
 end
 
 desc 'publish function to docker registry'
@@ -69,5 +98,7 @@ task :deploy, [:function] do |function: '*'|
     end
   end
 end
+
+task :setup => [:setup_openfaas, :setup_watchdog]
 
 task :connect => [:update_key, :login]
