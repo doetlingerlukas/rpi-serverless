@@ -2,6 +2,7 @@
 
 require 'pathname'
 require 'open3'
+require 'English'
 
 RPI = ENV['RPI'] || 'edge-device.local'
 HOST = "pi@#{RPI}"
@@ -79,22 +80,40 @@ task :login do
   sh 'faas-cli', 'login', '-u', 'admin', '-s', '--gateway', "http://#{RPI}:8080", :in=>'faas-key'
 end
 
-desc 'publish function to docker registry'
-task :publish, [:function] do |function: '*'|
-  desc 'publish a function'
+desc 'pull OpenFaaS templates'
+task :templates do
+  system 'faas-cli', 'version'
+  raise 'faas-cli not available' unless $CHILD_STATUS.success?
+
   Dir.chdir('functions') do
-    Pathname.glob("#{function}.yml").each do |f|
-      sh 'faas-cli', 'publish', '-f', f.to_s, '--platforms', 'linux/arm64,linux/arm,linux/amd64'
+    sh 'faas-cli', 'template', 'pull'
+    sh 'faas-cli', 'template', 'store', 'pull', 'python3-flask'
+  end
+end
+
+desc 'build a function file'
+task :build, [:f] => :templates do |f: '*'|
+  Dir.chdir('functions') do
+    Pathname.glob("#{f}.y*ml").each do |file|
+      sh 'faas-cli', 'build', '-f', file.to_s
     end
   end
 end
 
-desc 'deploy function to host'
-task :deploy, [:function] do |function: '*'|
-  desc 'deploy a function to a gateway'
+desc 'publish function file to docker registry'
+task :publish, [:f] do |f: '*'|
   Dir.chdir('functions') do
-    Pathname.glob("#{function}.yml").each do |f|
-      sh 'faas-cli', 'deploy', '-f', f.to_s, '--gateway', "http://#{RPI}:8080"
+    Pathname.glob("#{f}.y*ml").each do |file|
+      sh 'faas-cli', 'publish', '-f', file.to_s, '--platforms', 'linux/arm64,linux/arm,linux/amd64'
+    end
+  end
+end
+
+desc 'deploy function file to host'
+task :deploy, [:f] do |f: '*'|
+  Dir.chdir('functions') do
+    Pathname.glob("#{f}.y*ml").each do |file|
+      sh 'faas-cli', 'deploy', '-f', file.to_s, '--gateway', "http://#{RPI}:8080"
     end
   end
 end
