@@ -1,0 +1,13 @@
+[
+  {
+    "functionType": "Addition",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/addition"
+        }
+      }
+    ]
+  }
+]

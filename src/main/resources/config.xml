@@ -1,0 +1,28 @@
+<configuration>
+  <module class="at.uibk.dps.ee.control.modules.EnactmentVerticleModule">
+    <property name="pauseOnStart">false</property>
+    <property name="deploymentNumber">8</property>
+  </module>
+  <module class="at.uibk.dps.ee.docker.modules.ContainersModule">
+    <property name="dockerManager">DockerApi</property>
+    <property name="usedOs">Windows</property>
+  </module>
+  <module class="edge.discovery.modules.LNResourcesModule">
+  </module>
+  <module class="at.uibk.dps.ee.io.modules.InputReaderFileModule">
+    <property name="filePath">./inputData/inputSingleAtomic.json</property>
+  </module>
+  <module class="at.uibk.dps.ee.io.modules.LoggingModule">
+    <property name="pathToConfigFile">./logging/config/logback.xml</property>
+  </module>
+  <module class="at.uibk.dps.ee.io.modules.OutputPrinterModule"/>
+  <module class="at.uibk.dps.ee.io.modules.SpecificationInputModule">
+    <property name="filePathAfcl">./demoWfs/singleAtomic.yaml</property>
+    <property name="filePathMappingFile">./typeMappings/singleAtomic.json</property>
+  </module>
+  <module class="at.uibk.dps.sc.core.modules.SchedulerModule">
+    <property name="schedulingMode">SingleOption</property>
+    <property name="mappingsToPick">1</property>
+    <property name="sizeThresholdKb">10</property>
+  </module>
+</configuration>

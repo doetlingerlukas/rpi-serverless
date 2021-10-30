@@ -1,2 +1,28 @@
 rootProject.name = 'rpi-serverless'
 
+include 'edge-discovery'
+project ('edge-discovery').projectDir = new File(settingsDir, "../edge-discovery")
+
+if (startParameter.projectProperties.containsKey("local")) {
+  include 'EE-Control'
+  include 'EE-Core'
+  include 'EE-Deploy'
+  include 'EE-Docker'
+  include 'EE-Enactables'
+  include 'EE-Guice'
+  include 'EE-IO'
+  include 'EE-Model'
+  include 'EE-Visualization'
+  include 'SC-Core'
+
+  project (':EE-Control').projectDir = new File(settingsDir, "../Apollo/EE-Control")
+  project (':EE-Core').projectDir = new File(settingsDir, "../Apollo/EE-Core")
+  project (':EE-Deploy').projectDir = new File(settingsDir, "../Apollo/EE-Deploy")
+  project (':EE-Docker').projectDir = new File(settingsDir, "../EE-Docker")
+  project (':EE-Enactables').projectDir = new File(settingsDir, "../Apollo/EE-Enactables")
+  project (':EE-Guice').projectDir = new File(settingsDir, "../Apollo/EE-Guice")
+  project (':EE-IO').projectDir = new File(settingsDir, "../Apollo/EE-IO")
+  project (':EE-Model').projectDir = new File(settingsDir, "../Apollo/EE-Model")
+  project (':EE-Visualization').projectDir = new File(settingsDir, "../Apollo/EE-Visualization")
+  project (':SC-Core').projectDir = new File(settingsDir, "../Apollo/SC-Core")
+}
