@@ -6,3 +6,6 @@ faas-key
 # Python
 __pycache__
 .pytest_cache
+
+# Gradle
+.gradle
