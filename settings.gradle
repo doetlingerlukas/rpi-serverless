@@ -1,8 +1,3 @@
-rootProject.name = 'rpi-serverless'
-
-include 'edge-discovery'
-project ('edge-discovery').projectDir = new File(settingsDir, "../edge-discovery")
-
 if (startParameter.projectProperties.containsKey("local")) {
   include 'EE-Control'
   include 'EE-Core'
@@ -14,6 +9,7 @@ if (startParameter.projectProperties.containsKey("local")) {
   include 'EE-Model'
   include 'EE-Visualization'
   include 'SC-Core'
+  include 'edge-discovery'
 
   project (':EE-Control').projectDir = new File(settingsDir, "../Apollo/EE-Control")
   project (':EE-Core').projectDir = new File(settingsDir, "../Apollo/EE-Core")
@@ -25,4 +21,7 @@ if (startParameter.projectProperties.containsKey("local")) {
   project (':EE-Model').projectDir = new File(settingsDir, "../Apollo/EE-Model")
   project (':EE-Visualization').projectDir = new File(settingsDir, "../Apollo/EE-Visualization")
   project (':SC-Core').projectDir = new File(settingsDir, "../Apollo/SC-Core")
+  project (':edge-discovery').projectDir = new File(settingsDir, "../edge-discovery")
 }
+
+rootProject.name = 'rpi-serverless'

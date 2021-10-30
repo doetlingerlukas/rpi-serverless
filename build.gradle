@@ -43,6 +43,7 @@ dependencies {
     implementation project (':EE-Model')
     implementation project (':EE-Visualization')
     implementation project (':SC-Core')
+    implementation project (':edge-discovery')
   } else {
     implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Core:v1.0.0'
@@ -54,16 +55,15 @@ dependencies {
     implementation 'com.github.Apollo-Core:EE-Visualization:v1.0.0'
     implementation 'com.github.Apollo-Core:SC-Core:v1.0.0'
     implementation 'com.github.doetlingerlukas:EE-Deploy:fixVertXInstanceServer-SNAPSHOT'
-    //implementation 'com.github.doetlingerlukas:edge-discovery:main-SNAPSHOT'
+    implementation 'com.github.doetlingerlukas:edge-discovery:main-SNAPSHOT'
   }
 
-  implementation project (':edge-discovery')
 
-  // the server dependencies
+  // VertX
   implementation "io.vertx:vertx-web:${vertxVersion}"
   implementation "io.vertx:vertx-web-client:${vertxVersion}"
 
-  // SLF4J and Logback for logging
+  // SLF4J and Logback
   implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
 
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'

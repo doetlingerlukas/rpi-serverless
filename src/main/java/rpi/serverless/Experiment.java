@@ -5,6 +5,9 @@ import at.uibk.dps.ee.deploy.client.ApolloClient;
 import at.uibk.dps.ee.deploy.server.ApolloServer;
 import ch.qos.logback.classic.util.ContextInitializer;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
+import io.vertx.core.spi.VertxTracerFactory;
+import io.vertx.core.tracing.TracingOptions;
 
 /**
  * Main class to start the experiment.
@@ -22,7 +25,11 @@ public class Experiment {
   private final Vertx vertx;
 
   public Experiment() {
-    this.vertx = Vertx.vertx();
+    var vertxOptions = new VertxOptions();
+    vertxOptions.setTracingOptions(
+      new TracingOptions().setFactory(VertxTracerFactory.NOOP));
+
+    this.vertx = Vertx.vertx(vertxOptions);
   }
 
   private void startServer() {
