@@ -20,9 +20,9 @@
     <property name="filePathAfcl">./demoWfs/singleAtomic.yaml</property>
     <property name="filePathMappingFile">./typeMappings/singleAtomic.json</property>
   </module>
-  <module class="at.uibk.dps.sc.core.modules.SchedulerModule">
-    <property name="schedulingMode">SingleOption</property>
-    <property name="mappingsToPick">1</property>
+  <module class="rpi.serverless.scheduler.EdgeSchedulerModule">
+    <property name="schedulingMode">Random</property>
+    <property name="mappingsToPick">2</property>
     <property name="sizeThresholdKb">10</property>
   </module>
 </configuration>
