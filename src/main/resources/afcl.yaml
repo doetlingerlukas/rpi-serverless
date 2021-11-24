@@ -9,7 +9,7 @@ dataIns:
     source: "wait"
 workflowBody:
   - function:
-      name: "addition_Demo"
+      name: "doetlingerlukas-addition"
       type: "Addition"
       dataIns:
         - name: "firstSummand"
@@ -30,4 +30,4 @@ workflowBody:
 dataOuts:
   - name: "result"
     type: "number"
-    source: "addition_Demo/sum"
+    source: "doetlingerlukas-addition/sum"
