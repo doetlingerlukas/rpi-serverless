@@ -4,7 +4,7 @@ provider:
   gateway: http://127.0.0.1:8080
 functions:
   analyze-array:
-    lang: python3-http
+    lang: python3-flask
     handler: ./analyze-array
     image: doetlingerlukas/analyze-array:latest
 
