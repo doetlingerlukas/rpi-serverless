@@ -1,33 +1,36 @@
 ---
-name: "single Atomic"
+name: "analyze array"
 dataIns:
-  - name: "a"
-    type: "number"
-    source: "a"
-  - name: "wait"
-    type: "number"
-    source: "wait"
+  - name: "numbers"
+    type: "collection"
+    source: "numbers"
 workflowBody:
-  - function:
-      name: "doetlingerlukas-addition"
-      type: "Addition"
+  - parallelFor:
+      name: "parallelFor"
       dataIns:
-        - name: "firstSummand"
-          type: "number"
-          source: "single Atomic/a"
-        - name: "secondSummand"
-          type: "number"
-          source: "10"
-        - name: "waitTimeIn"
-          type: "number"
-          source: "single Atomic/wait"
-      dataOuts: 
-        - name: "sum"
-          type: "number"
-      properties:
-        - name: "resource"
-          value: "my_res_link" 
+        - name: "in"
+          type: "collection"
+          source: "analyze array/numbers"
+          constraints:
+          - name: "split"
+            value: 4
+      iterators: ["in"]
+      loopBody:
+        - function:
+            name: "doetlingerlukas-analyze-array"
+            type: "AnalyzeArray"
+            dataIns:
+              - name: "array"
+                type: "collection"
+                source: "parallelFor/in"
+            dataOuts:
+              - name: "mean"
+                type: "number"
+      dataOuts:
+        - name: "results_mean"
+          type: "collection"
+          source: "doetlingerlukas-analyze-array/mean"
 dataOuts:
-  - name: "result"
-    type: "number"
-    source: "doetlingerlukas-addition/sum"
+  - name: "collection_mean"
+    type: "collection"
+    source: "parallelFor/results_mean"

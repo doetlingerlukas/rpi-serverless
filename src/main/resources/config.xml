@@ -10,15 +10,15 @@
   <module class="edge.discovery.modules.LNResourcesModule">
   </module>
   <module class="at.uibk.dps.ee.io.modules.InputReaderFileModule">
-    <property name="filePath">./inputData/inputSingleAtomic.json</property>
+    <property name="filePath">./src/main/resources/input.json</property>
   </module>
   <module class="at.uibk.dps.ee.io.modules.LoggingModule">
-    <property name="pathToConfigFile">./logging/config/logback.xml</property>
+    <property name="pathToConfigFile">./src/main/resources/logback.xml</property>
   </module>
   <module class="at.uibk.dps.ee.io.modules.OutputPrinterModule"/>
   <module class="at.uibk.dps.ee.io.modules.SpecificationInputModule">
-    <property name="filePathAfcl">./demoWfs/singleAtomic.yaml</property>
-    <property name="filePathMappingFile">./typeMappings/singleAtomic.json</property>
+    <property name="filePathAfcl">./src/main/resources/afcl.yaml</property>
+    <property name="filePathMappingFile">./src/main/resources/mappings.json</property>
   </module>
   <module class="rpi.serverless.scheduler.EdgeSchedulerModule">
     <property name="schedulingMode">Random</property>

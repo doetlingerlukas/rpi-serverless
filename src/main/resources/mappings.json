@@ -1,11 +1,11 @@
 [
   {
-    "functionType": "Addition",
+    "functionType": "AnalyzeArray",
     "resources": [
       {
         "type": "Local",
         "properties": {
-          "Image": "doetlingerlukas/addition"
+          "Image": "doetlingerlukas/analyze-array"
         }
       }
     ]
