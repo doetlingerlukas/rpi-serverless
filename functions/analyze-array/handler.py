@@ -10,7 +10,8 @@ def verify_input(input_) -> bool:
 
 def handle(event):
 
-  input_array = json.loads(event)
+  req = json.loads(event)
+  input_array = req['array']
 
   if not verify_input(input_array):
     return {
