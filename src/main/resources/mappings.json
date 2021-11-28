@@ -1,0 +1,13 @@
+[
+  {
+    "functionType": "AnalyzeArray",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/analyze-array"
+        }
+      }
+    ]
+  }
+]

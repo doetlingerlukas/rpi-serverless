@@ -1,0 +1,36 @@
+---
+name: "analyze array"
+dataIns:
+  - name: "numbers"
+    type: "collection"
+    source: "numbers"
+workflowBody:
+  - parallelFor:
+      name: "parallelFor"
+      dataIns:
+        - name: "in"
+          type: "collection"
+          source: "analyze array/numbers"
+          constraints:
+          - name: "split"
+            value: 4
+      iterators: ["in"]
+      loopBody:
+        - function:
+            name: "doetlingerlukas-analyze-array"
+            type: "AnalyzeArray"
+            dataIns:
+              - name: "array"
+                type: "collection"
+                source: "parallelFor/in"
+            dataOuts:
+              - name: "mean"
+                type: "number"
+      dataOuts:
+        - name: "results_mean"
+          type: "collection"
+          source: "doetlingerlukas-analyze-array/mean"
+dataOuts:
+  - name: "collection_mean"
+    type: "collection"
+    source: "parallelFor/results_mean"

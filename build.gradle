@@ -1,0 +1,77 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+}
+
+plugins {
+  id 'java'
+  id 'application'
+  id 'eclipse'
+  id 'maven'
+  id 'jacoco'
+}
+
+// for compliance with higher Java versions
+jacoco {
+  toolVersion = "0.8.5"
+}
+
+mainClassName = 'rpi.serverless.Experiment'
+
+def vertxVersion = '4.0.3'
+
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+  maven {
+    name "jitpack"
+    url 'https://jitpack.io'
+  }
+}
+
+dependencies {
+  if (project.hasProperty("local")) {
+    implementation project (':EE-Control')
+    implementation project (':EE-Core')
+    implementation project (':EE-Deploy')
+    implementation project (':EE-Docker')
+    implementation project (':EE-Enactables')
+    implementation project (':EE-Guice')
+    implementation project (':EE-IO')
+    implementation project (':EE-Model')
+    implementation project (':SC-Core')
+    implementation project (':edge-discovery')
+  } else {
+    implementation 'com.github.Apollo-Core:EE-Control:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Deploy:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Docker:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Enactables:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-IO:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:SC-Core:v1.0.1'
+    implementation 'com.github.doetlingerlukas:edge-discovery:main-SNAPSHOT'
+  }
+
+
+  // VertX
+  implementation "io.vertx:vertx-web:${vertxVersion}"
+  implementation "io.vertx:vertx-web-client:${vertxVersion}"
+
+  // SLF4J and Logback
+  implementation group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
+
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+application {
+  mainClass = 'rpi.serverless.Experiment'
+}
+
+test {
+  useJUnitPlatform()
+}

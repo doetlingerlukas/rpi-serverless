@@ -6,3 +6,12 @@ faas-key
 # Python
 __pycache__
 .pytest_cache
+.tox
+
+# Gradle
+.gradle
+out
+
+template
+build
+bin
