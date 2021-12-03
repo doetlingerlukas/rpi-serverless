@@ -1,16 +1,16 @@
 ---
 name: "analyze array"
 dataIns:
-  - name: "numbers"
+  - name: "array"
     type: "collection"
-    source: "numbers"
+    source: "array"
 workflowBody:
   - parallelFor:
       name: "parallelFor"
       dataIns:
         - name: "in"
           type: "collection"
-          source: "analyze array/numbers"
+          source: "analyze array/array"
           constraints:
           - name: "split"
             value: 4
