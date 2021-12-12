@@ -1,0 +1,57 @@
+[
+  {
+    "functionType": "sentim-batch",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/sentim-batch"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "sentim-preprocess",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/sentim-preprocess"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "sentim-inference",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/sentim-inference"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "sentim-inference-textblob",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/sentim-inference-textblob"
+        }
+      }
+    ]
+  },
+  {
+    "functionType": "sentim-reduce",
+    "resources": [
+      {
+        "type": "Local",
+        "properties": {
+          "Image": "doetlingerlukas/sentim-reduce"
+        }
+      }
+    ]
+  }
+]

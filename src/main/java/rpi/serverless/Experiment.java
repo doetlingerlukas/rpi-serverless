@@ -17,10 +17,10 @@ import io.vertx.core.tracing.TracingOptions;
 public class Experiment {
 
   private final static String logbackConfig = "./src/main/resources/logback.xml";
-  private final static String config =        "./src/main/resources/config.xml";
-  private final static String afcl =          "./src/main/resources/afcl.yaml";
-  private final static String mappings =      "./src/main/resources/mappings.json";
-  private final static String input =         "./src/main/resources/input.json";
+  private final static String config =        "./src/main/resources/sentiment-analysis/config.xml";
+  private final static String afcl =          "./src/main/resources/sentiment-analysis/workflow.yaml";
+  private final static String mappings =      "./src/main/resources/sentiment-analysis/mappings.json";
+  private final static String input =         "./src/main/resources/sentiment-analysis/input/input-200-tweets.json";
 
   private final Vertx vertx;
 
