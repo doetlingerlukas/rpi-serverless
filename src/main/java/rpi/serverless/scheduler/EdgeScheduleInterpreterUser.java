@@ -6,12 +6,14 @@ import at.uibk.dps.ee.enactables.local.demo.FunctionFactoryDemo;
 import at.uibk.dps.ee.enactables.serverless.FunctionFactoryServerless;
 import at.uibk.dps.ee.model.properties.PropertyServiceMapping;
 import at.uibk.dps.ee.model.properties.PropertyServiceMapping.EnactmentMode;
+import at.uibk.dps.ee.model.properties.PropertyServiceResource;
 import at.uibk.dps.sc.core.interpreter.ScheduleInterpreterUser;
 import com.google.inject.Inject;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
 
+import java.util.Comparator;
 import java.util.Set;
 
 /**
@@ -40,7 +42,7 @@ public class EdgeScheduleInterpreterUser  extends ScheduleInterpreterUser {
   protected EnactmentFunction interpretScheduleUser(Task task, Set<Mapping<Task, Resource>> scheduleModel) {
     var selectedMapping = scheduleModel.stream()
       .filter(m -> PropertyServiceMapping.getEnactmentMode(m).equals(EnactmentMode.Serverless))
-      .findFirst();
+      .min(Comparator.comparing((m) -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size()));
 
     return getFunctionForMapping(task, selectedMapping.orElse(scheduleModel.iterator().next()));
   }

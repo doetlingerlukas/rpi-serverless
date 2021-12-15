@@ -1,6 +1,6 @@
 {
   "desired_num_batches": 2,
-  "inference_type": "TENSORFLOW",
+  "inference_type": "TEXTBLOB",
   "all_tweets": [
     {
       "text": "Gym Time!",
