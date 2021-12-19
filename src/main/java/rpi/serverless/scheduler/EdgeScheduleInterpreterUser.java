@@ -42,7 +42,9 @@ public class EdgeScheduleInterpreterUser  extends ScheduleInterpreterUser {
   protected EnactmentFunction interpretScheduleUser(Task task, Set<Mapping<Task, Resource>> scheduleModel) {
     var selectedMapping = scheduleModel.stream()
       .filter(m -> PropertyServiceMapping.getEnactmentMode(m).equals(EnactmentMode.Serverless))
-      .min(Comparator.comparing((m) -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size()));
+      //.min(Comparator.comparing((m) -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size()));
+      .filter(m -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size() <= 4)
+      .findFirst();
 
     return getFunctionForMapping(task, selectedMapping.orElse(scheduleModel.iterator().next()));
   }
