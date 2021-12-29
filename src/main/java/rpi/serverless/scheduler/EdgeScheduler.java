@@ -30,10 +30,6 @@ public class EdgeScheduler extends SchedulerAbstract {
 
   @Override
   protected Set<Mapping<Task, Resource>> chooseMappingSubset(Task task, Set<Mapping<Task, Resource>> mappingOptions) {
-    super.specification.getMappings().forEach(m -> {
-      System.out.println(m);
-    });
-
     final List<Mapping<Task, Resource>> mappingList = new ArrayList<>(mappingOptions);
     Random random = new Random();
     return IntStream.generate(() -> random.nextInt(mappingOptions.size())).limit(10)
