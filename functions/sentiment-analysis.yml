@@ -1,0 +1,24 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  sentim-batch:
+    lang: python3-flask
+    handler: sentim-batch
+    image: doetlingerlukas/sentim-batch:latest
+
+  sentim-inference-textblob:
+    lang: python3-flask-debian
+    handler: sentim-inference-textblob
+    image: doetlingerlukas/sentim-inference-textblob:latest
+
+  sentim-preprocess:
+    lang: python3-flask
+    handler: sentim-preprocess
+    image: doetlingerlukas/sentim-preprocess:latest
+
+  sentim-reduce:
+    lang: python3-flask
+    handler: sentim-reduce
+    image: doetlingerlukas/sentim-reduce:latest
