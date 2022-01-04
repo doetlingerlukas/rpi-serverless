@@ -85,6 +85,28 @@ faas-cli deploy -f sentiment-analysis.yml --gateway http://<address of Pi>:8080
 
 This may take some time as the images have to be downloaded and started on the Pi. You can verify that all functions are available by looking at the OpenFaaS web interface, where all functions should be listed.
 
+### Use function running in AWS or IBM
+
+If you would like to integrate serverless function running in AWS or IBM cloud services into the experiment, you need to manually deploy them to the services and create mappings in the workflow. Therefore, the mappings for each function need to be added to the appropriate file (i.e. `src\main\resources\sentiment-analysis\mappings.json` for the default sentiment-analysis workflow).
+
+Here is an example on how such an entry looks:
+
+```json
+{
+  "functionType": "sentim-batch",
+  "resources": [
+    {
+      "type": "Serverless",
+      "properties": {
+        "Uri": "<function uri>"
+      }
+    }
+  ]
+}
+```
+
+Please refer to the [Sentiment-Analysis workflow repository](https://github.com/Apollo-Workflows/Sentiment-Analysis) on instructions on how to deploy the functions to either AWS or IBM.
+
 ## Run Experiment
 
 The experiment uses the [Apollo Platform](https://github.com/Apollo-Core) to discover and orchestrate tasks on one or more Raspberry Pi's. The full experiment can be run with
