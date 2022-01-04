@@ -32,6 +32,12 @@ $env:RPI = '<IP or DNS name>' ; rake setup
 RPI="<IP or DNS name>" rake setup
 ```
 
+## Install edge-connector
+
+For the orchestration to find the target devices in the edge layer, the Raspberry Pi is required to run a specific software called edge-connector. Please refer to the [edge-connector repository](https://github.com/doetlingerlukas/edge-connector-rs) on how to install it on the Pi.
+
+After the program has been started on the device, it will execute a benchmark routine to measure the devices performance. After that, it will print the message *"Edge-device ready for connection!"* to the command line, indicating that it's ready for connection. Until then Apollo will not be able to discover the device.
+
 ## Install OpenFaaS CLI
 
 Install [faas-cli](https://github.com/openfaas/faas-cli) to you local device to deploy function to the Raspberry Pi. While this step can be circumvented by using the OpenFaaS web interface, it is recommended to use the `faas-cli`. You can skip this step if you already got `faas-cli` installed. Otherwise use one of the recommended options:
