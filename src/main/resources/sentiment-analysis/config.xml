@@ -1,7 +1,7 @@
 <configuration>
   <module class="at.uibk.dps.ee.control.modules.EnactmentVerticleModule">
     <property name="pauseOnStart">false</property>
-    <property name="deploymentNumber">8</property>
+    <property name="deploymentNumber">1</property>
   </module>
   <module class="at.uibk.dps.ee.docker.modules.ContainersModule">
     <property name="dockerManager">DockerApi</property>
