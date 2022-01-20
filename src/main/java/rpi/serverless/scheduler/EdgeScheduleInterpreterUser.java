@@ -13,6 +13,8 @@ import com.google.inject.Inject;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.Set;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
  * @author Lukas Dötlinger
  */
 public class EdgeScheduleInterpreterUser  extends ScheduleInterpreterUser {
+
+  private final Logger logger = LoggerFactory.getLogger(EdgeScheduleInterpreterUser.class);
 
   /**
    * Default constructor.
@@ -61,6 +65,9 @@ public class EdgeScheduleInterpreterUser  extends ScheduleInterpreterUser {
       .orElse(scheduleModel.iterator().next());
 
     var selectedMapping = bestEdgeMapping.orElse(bestServerlessMapping.orElse(anyLocalMapping));
+
+    logger.info("Mapping " + selectedMapping.getSource().toString() + " has useage " +
+      PropertyServiceResource.getUsingTaskIds(selectedMapping.getTarget()).size());
 
     return getFunctionForMapping(task, selectedMapping);
   }

@@ -9,6 +9,9 @@ import io.vertx.core.VertxOptions;
 import io.vertx.core.spi.VertxTracerFactory;
 import io.vertx.core.tracing.TracingOptions;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * Main class to start the experiment.
  *
@@ -44,7 +47,17 @@ public class Experiment {
 
     ApolloClient apolloClient = new ApolloClient(this.vertx, "127.0.0.1");
     apolloClient.configureServer(specString, configString);
+
+    System.out.println("Experiment started.");
+    var start = Instant.now();
     apolloClient.runInput(inputString);
+    var end = Instant.now();
+    System.out.println("Experiment took " + Duration.between(start, end).toMillis() / 1000f + " seconds.");
+  }
+
+  private void close() {
+    vertx.deploymentIDs().forEach(vertx::undeploy);
+    vertx.close();
   }
 
   public static void main(String[] args) {
@@ -53,5 +66,6 @@ public class Experiment {
     Experiment experiment = new Experiment();
     experiment.startServer();
     experiment.run();
+    experiment.close();
   }
 }
