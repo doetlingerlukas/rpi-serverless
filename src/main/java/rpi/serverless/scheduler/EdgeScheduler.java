@@ -1,6 +1,8 @@
 package rpi.serverless.scheduler;
 
+import at.uibk.dps.ee.guice.starter.VertxProvider;
 import at.uibk.dps.ee.model.graph.SpecificationProvider;
+import at.uibk.dps.sc.core.capacity.CapacityCalculator;
 import at.uibk.dps.sc.core.scheduler.SchedulerAbstract;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -24,8 +26,9 @@ import java.util.stream.IntStream;
 public class EdgeScheduler extends SchedulerAbstract {
 
   @Inject
-  public EdgeScheduler(final SpecificationProvider specProvider) {
-    super(specProvider);
+  public EdgeScheduler(final SpecificationProvider specProvider, final CapacityCalculator capacityCalculator,
+                       final VertxProvider vProv) {
+    super(specProvider, capacityCalculator, vProv);
   }
 
   @Override

@@ -44,15 +44,15 @@ dependencies {
     implementation project (':SC-Core')
     implementation project (':edge-discovery')
   } else {
-    implementation 'com.github.Apollo-Core:EE-Control:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Deploy:v1.0.1'
-    implementation 'com.github.Apollo-Core:EE-Docker:v1.0.1'
-    implementation 'com.github.Apollo-Core:EE-Enactables:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-Deploy:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Docker:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-IO:v1.0.1'
+    implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
     implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:SC-Core:v1.0.1'
+    implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
     implementation 'com.github.doetlingerlukas:edge-discovery:main-SNAPSHOT'
   }
 

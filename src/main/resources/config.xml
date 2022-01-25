@@ -1,7 +1,7 @@
 <configuration>
   <module class="at.uibk.dps.ee.control.modules.EnactmentVerticleModule">
     <property name="pauseOnStart">false</property>
-    <property name="deploymentNumber">8</property>
+    <property name="deploymentNumber">1</property>
   </module>
   <module class="at.uibk.dps.ee.docker.modules.ContainersModule">
     <property name="dockerManager">DockerApi</property>
@@ -20,9 +20,12 @@
     <property name="filePathAfcl">./src/main/resources/afcl.yaml</property>
     <property name="filePathMappingFile">./src/main/resources/mappings.json</property>
   </module>
-  <module class="rpi.serverless.scheduler.EdgeSchedulerModule">
-    <property name="schedulingMode">Random</property>
-    <property name="mappingsToPick">2</property>
+  <module class="at.uibk.dps.sc.core.modules.CapacityLimitationModule">
+    <property name="maximalTaskNumber">2</property>
+  </module>
+  <module class="at.uibk.dps.sc.core.modules.SchedulerModule">
+    <property name="schedulingMode">LocalResources</property>
+    <property name="mappingsToPick">1</property>
     <property name="sizeThresholdKb">10</property>
   </module>
 </configuration>
