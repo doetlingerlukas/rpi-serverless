@@ -11,6 +11,7 @@ import io.vertx.core.tracing.TracingOptions;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.stream.IntStream;
 
 /**
  * Main class to start the experiment.
@@ -41,6 +42,8 @@ public class Experiment {
   }
 
   private void run() {
+    var runs = 10;
+
     String specString   = FileStringConverter.readSpecString(afcl, mappings);
     String configString = FileStringConverter.readModuleConfiguration(config);
     String inputString  = FileStringConverter.readInputFile(input);
@@ -49,10 +52,21 @@ public class Experiment {
     apolloClient.configureServer(specString, configString);
 
     System.out.println("Experiment started.");
-    var start = Instant.now();
-    apolloClient.runInput(inputString);
-    var end = Instant.now();
-    System.out.println("Experiment took " + Duration.between(start, end).toMillis() / 1000f + " seconds.");
+
+    long runtimeSum = 0;
+
+    for (int i = 1; i <= runs; i++) {
+      var start = Instant.now();
+      apolloClient.runInput(inputString);
+      var end = Instant.now();
+
+      runtimeSum += Duration.between(start, end).toMillis();
+      System.out.println("Experiment run " + i + " took " + Duration.between(start, end).toMillis() / 1000f +
+        " seconds.");
+    }
+
+    System.out.println("Experiment took on average " + (runtimeSum / (float) runs) / 1000f + " seconds for " +
+      runs + " runs.");
   }
 
   private void close() {
