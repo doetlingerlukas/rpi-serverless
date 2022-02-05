@@ -16,6 +16,8 @@ rake volume[<path_to_volume>, <ssid>, <psk>]
 
 Setting up more than one wireless network is currently not supported with this rake task. Please refer to the [Wiki](https://github.com/doetlingerlukas/rpi-serverless/wiki/Setup-Raspberry-Pi) for additional information on how to edit the `wpa_supplicant.conf`.
 
+If you are running this from a Windows host, make sure to convert `wpa_supplicant.conf` to *LF* line endings, as Raspbian OS will fail to read *CRLF*.
+
 After booting, the Pi will automatically connect to the specified wireless network and ssh access will be enabled. It is recommended to change the default ssh password and add an ssh key. This is especially useful to avoid entering a password each time you connect to the Pi or run a rake task using ssh.
 
 The setup task can be used to install `faasd` and `watchdog` on the device. The rake tasks therefore connects using ssh, which requires the environment variable `RPI` to be set.
@@ -116,7 +118,6 @@ The experiment uses the [Apollo Platform](https://github.com/Apollo-Core) to dis
 ```
 
 For the experiment to work properly, the Raspberry Pi's must be reachable in the same network, as the machine starting the orchestration. [Apollo](https://github.com/Apollo-Core) is then able to find those devices if they are running the therefore designed [edge-connector](https://github.com/doetlingerlukas/edge-connector-rs) software. Please refer to the edge-connector project for instructions on how to deploy it to a Raspberry Pi. The given instructions are designed to work with the configurations done in the previous step.
-
 
 ## Deploy functions (optional)
 

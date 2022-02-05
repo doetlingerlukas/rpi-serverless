@@ -60,7 +60,7 @@ desc 'setup faasd on a raspberry pi'
 task :setup_openfaas do
   ssh <<~SH
     sudo apt-get update
-    sudo apt upgrade
+    sudo apt upgrade -y
 
     sudo apt-get install -y git iptables
 
