@@ -11,6 +11,7 @@ import io.vertx.core.tracing.TracingOptions;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 /**
@@ -24,7 +25,7 @@ public class Experiment {
   private final static String config =        "./src/main/resources/sentiment-analysis/config.xml";
   private final static String afcl =          "./src/main/resources/sentiment-analysis/workflow.yaml";
   private final static String mappings =      "./src/main/resources/sentiment-analysis/mappings.json";
-  private final static String input =         "./src/main/resources/sentiment-analysis/input/input-10000-tweets.json";
+  private final static String input =         "./src/main/resources/sentiment-analysis/input/input-200-tweets.json";
 
   private final Vertx vertx;
 
@@ -42,7 +43,7 @@ public class Experiment {
   }
 
   private void run() {
-    var runs = 10;
+    double runs = 10;
 
     String specString   = FileStringConverter.readSpecString(afcl, mappings);
     String configString = FileStringConverter.readModuleConfiguration(config);
@@ -53,20 +54,40 @@ public class Experiment {
 
     System.out.println("Experiment started.");
 
-    long runtimeSum = 0;
+    var runtimes = new ArrayList<Long>();
 
     for (int i = 1; i <= runs; i++) {
       var start = Instant.now();
       apolloClient.runInput(inputString);
       var end = Instant.now();
 
-      runtimeSum += Duration.between(start, end).toMillis();
+      runtimes.add(Duration.between(start, end).toMillis());
       System.out.println("Experiment run " + i + " took " + Duration.between(start, end).toMillis() / 1000f +
         " seconds.");
+
+      try {
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
     }
 
-    System.out.println("Experiment took on average " + (runtimeSum / (float) runs) / 1000f + " seconds for " +
+    var average = runtimes.stream().mapToLong(Long::longValue).sum() / runs;
+    var variance =
+      Math.pow(runtimes.stream().map(r -> r - average).mapToDouble(Double::doubleValue).sum(), 2) / runs;
+    var std_deviation = Math.sqrt(variance);
+
+    System.out.println("Experiment took on average " + average / 1000f + " seconds for " +
       runs + " runs.");
+    System.out.println(runtimes);
+    System.out.println("Average: " + average + ", Variance: " + variance +
+      ", Standard Deviation: " + std_deviation);
+
+    try {
+      Thread.sleep(5000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   private void close() {
