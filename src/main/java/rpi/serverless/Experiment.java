@@ -12,7 +12,6 @@ import io.vertx.core.tracing.TracingOptions;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.stream.IntStream;
 
 /**
  * Main class to start the experiment.

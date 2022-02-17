@@ -3,8 +3,7 @@
     <property name="pauseOnStart">false</property>
     <property name="deploymentNumber">1</property>
   </module>
-  <module class="at.uibk.dps.ee.docker.modules.ContainersModule">
-    <property name="dockerManager">DockerApi</property>
+  <module class="at.uibk.dps.ee.docker.modules.LocalDockerModule">
     <property name="usedOs">Windows</property>
   </module>
   <module class="edge.discovery.modules.LNResourcesModule">
