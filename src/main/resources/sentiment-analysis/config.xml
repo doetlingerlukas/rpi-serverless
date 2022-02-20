@@ -2,12 +2,13 @@
   <module class="at.uibk.dps.ee.control.modules.EnactmentVerticleModule">
     <property name="pauseOnStart">false</property>
     <property name="deploymentNumber">1</property>
+    <property name="delayInSeconds">0</property>
   </module>
-  <module class="at.uibk.dps.ee.docker.modules.LocalDockerModule">
-    <property name="usedOs">Windows</property>
-  </module>
+
   <module class="edge.discovery.modules.LNResourcesModule">
+    <property name="waitTimeInit">6</property>
   </module>
+  <module class="at.uibk.dps.ee.enactables.modules.CoreFunctionsModule"/>
   <module class="at.uibk.dps.ee.io.modules.InputReaderFileModule">
     <property name="filePath">./src/main/resources/sentiment-analysis/input/input-200-tweets.json</property>
   </module>
@@ -20,10 +21,10 @@
     <property name="filePathMappingFile">./src/main/resources/sentiment-analysis/mappings.json</property>
   </module>
   <module class="at.uibk.dps.sc.core.modules.CapacityLimitationModule">
-    <property name="maximalTaskNumber">2</property>
+    <property name="maximalTaskNumber">4</property>
   </module>
   <module class="at.uibk.dps.sc.core.modules.SchedulerModule">
-    <property name="schedulingMode">LocalResources</property>
+    <property name="schedulingMode">Random</property>
     <property name="mappingsToPick">1</property>
     <property name="sizeThresholdKb">10</property>
   </module>

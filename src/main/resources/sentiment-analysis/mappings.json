@@ -7,6 +7,12 @@
         "properties": {
           "Image": "doetlingerlukas/sentim-batch"
         }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": ""
+        }
       }
     ]
   },
@@ -17,6 +23,12 @@
         "type": "Local",
         "properties": {
           "Image": "doetlingerlukas/sentim-preprocess"
+        }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": ""
         }
       }
     ]
@@ -29,6 +41,12 @@
         "properties": {
           "Image": "doetlingerlukas/sentim-inference"
         }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": ""
+        }
       }
     ]
   },
@@ -40,6 +58,12 @@
         "properties": {
           "Image": "doetlingerlukas/sentim-inference-textblob"
         }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": ""
+        }
       }
     ]
   },
@@ -50,6 +74,12 @@
         "type": "Local",
         "properties": {
           "Image": "doetlingerlukas/sentim-reduce"
+        }
+      },
+      {
+        "type": "Serverless",
+        "properties": {
+          "Uri": ""
         }
       }
     ]
