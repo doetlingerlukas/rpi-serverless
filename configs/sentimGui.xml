@@ -19,6 +19,10 @@
     <property name="filePathAfcl">./src/main/resources/sentiment-analysis/workflow.yaml</property>
     <property name="filePathMappingFile">./src/main/resources/sentiment-analysis/mappings.json</property>
   </module>
+  <module class="at.uibk.dps.ee.visualization.modules.EnactmentViewerModule">
+    <property name="closeOnTerminate">true</property>
+    <property name="updatePeriodMs">100</property>
+  </module>
   <module class="at.uibk.dps.sc.core.modules.CapacityLimitationModule">
     <property name="maximalTaskNumber">4</property>
   </module>
