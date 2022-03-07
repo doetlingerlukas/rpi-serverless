@@ -6,11 +6,10 @@ import at.uibk.dps.ee.deploy.server.ApolloServer;
 import ch.qos.logback.classic.util.ContextInitializer;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.spi.VertxTracerFactory;
 import io.vertx.core.tracing.TracingOptions;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 
 /**
@@ -56,13 +55,13 @@ public class Experiment {
     var runtimes = new ArrayList<Long>();
 
     for (int i = 1; i <= runs; i++) {
-      var start = Instant.now();
-      apolloClient.runInput(inputString);
-      var end = Instant.now();
+      String result = apolloClient.runInput(inputString);
+      JsonObject json = new JsonObject(result);
 
-      runtimes.add(Duration.between(start, end).toMillis());
-      System.out.println("Experiment run " + i + " took " + Duration.between(start, end).toMillis() / 1000f +
-        " seconds.");
+      long runtime = Long.parseLong(json.getString("runtime"));
+
+      runtimes.add(runtime);
+      System.out.println("Experiment run " + i + " took " + runtime / 1000f + " seconds.");
 
       try {
         Thread.sleep(5000);

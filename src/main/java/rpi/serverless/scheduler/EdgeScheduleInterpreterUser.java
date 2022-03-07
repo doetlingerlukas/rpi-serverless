@@ -11,6 +11,7 @@ import com.google.inject.Inject;
 import net.sf.opendse.model.Mapping;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
+import org.opt4j.core.common.random.Rand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,45 +26,29 @@ import java.util.stream.Collectors;
  */
 public class EdgeScheduleInterpreterUser extends ScheduleInterpreterUser {
 
+  protected final Rand random;
+
   private final Logger logger = LoggerFactory.getLogger(EdgeScheduleInterpreterUser.class);
 
-  /**
-   * Default constructor.
-   *
-   * @param functionFactoryLocal the factory for the creation of
-   *        {@link EnactmentFunction}s performing local calculation
-   * @param functionFactorySl the factory for the creation of serverless functions
-   * @param functionFactoryDemo the factory for the creation of demo functions
-   *        implemented natively
-   */
   @Inject
-  public EdgeScheduleInterpreterUser(Set<FunctionFactoryUser> userFactories) {
+  public EdgeScheduleInterpreterUser(Set<FunctionFactoryUser> userFactories, final Rand random) {
     super(userFactories);
+    this.random = random;
   }
 
   @Override
-  protected EnactmentFunction interpretScheduleUser(Task task,
-      Set<Mapping<Task, Resource>> scheduleModel) {
-    var serverlessMappings = scheduleModel.stream()
-        .filter(m -> PropertyServiceMapping.getEnactmentMode(m).equals(EnactmentMode.Serverless))
-        .collect(Collectors.toSet());
+  protected EnactmentFunction interpretScheduleUser(Task task, Set<Mapping<Task, Resource>> scheduleModel) {
+    var nonLocalMappings = scheduleModel.stream()
+        .filter(m -> !PropertyServiceMapping.getEnactmentMode(m).equals(PropertyServiceMapping.EnactmentMode.Local))
+        .collect(Collectors.toList());
 
-    var bestEdgeMapping = serverlessMappings.stream()
-        .filter(m -> PsMappingLocalRes.isLocResMapping(m))
-        .filter(m -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size() < 4).findFirst();
+    if (nonLocalMappings.isEmpty()) {
+      logger.info("mappings local problem");
+    }
 
-    var bestServerlessMapping = serverlessMappings.stream()
-        .filter(m -> !PsMappingLocalRes.isLocResMapping(m)).min(Comparator
-            .comparing((m) -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size()));
-
-    var anyLocalMapping = scheduleModel.stream()
-        .filter(m -> PropertyServiceMapping.getEnactmentMode(m).equals(EnactmentMode.Local))
-        .findAny().orElse(scheduleModel.iterator().next());
-
-    var selectedMapping = bestEdgeMapping.orElse(bestServerlessMapping.orElse(anyLocalMapping));
-
-    logger.info("Mapping " + selectedMapping.getSource().toString() + " has useage "
-        + PropertyServiceResource.getUsingTaskIds(selectedMapping.getTarget()).size());
+    var selectedMapping = nonLocalMappings.isEmpty() ?
+      scheduleModel.iterator().next() :
+      nonLocalMappings.get(random.nextInt(nonLocalMappings.size()));
 
     return getFunctionForMapping(task, selectedMapping);
   }
