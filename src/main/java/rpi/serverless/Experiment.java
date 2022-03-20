@@ -70,15 +70,18 @@ public class Experiment {
       }
     }
 
-    var average = runtimes.stream().mapToLong(Long::longValue).sum() / runs;
+    var mean = runtimes.stream().mapToLong(Long::longValue).sum() / runs;
     var variance =
-      Math.pow(runtimes.stream().map(r -> r - average).mapToDouble(Double::doubleValue).sum(), 2) / runs;
+      runtimes.stream()
+        .map(r -> r - mean).mapToDouble(Double::doubleValue)
+        .map(d -> Math.pow(d, 2))
+        .sum() / runs;
     var std_deviation = Math.sqrt(variance);
 
-    System.out.println("Experiment took on average " + average / 1000f + " seconds for " +
+    System.out.println("Experiment took on average " + mean / 1000f + " seconds for " +
       runs + " runs.");
     System.out.println(runtimes);
-    System.out.println("Average: " + average + ", Variance: " + variance +
+    System.out.println("Mean: " + mean + ", Variance: " + variance +
       ", Standard Deviation: " + std_deviation);
 
     try {

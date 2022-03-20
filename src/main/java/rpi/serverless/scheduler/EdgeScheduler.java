@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Singleton
 public class EdgeScheduler extends SchedulerAbstract {
-  
+
   protected final Rand random;
 
   @Inject
@@ -36,21 +36,7 @@ public class EdgeScheduler extends SchedulerAbstract {
 
   @Override
   protected Set<Mapping<Task, Resource>> chooseMappingSubset(Task task, Set<Mapping<Task, Resource>> mappingOptions) {
-
-      final List<Mapping<Task, Resource>> mappingList = mappingOptions.stream()
-        .filter(mapping ->
-          !PropertyServiceMapping.getEnactmentMode(mapping).equals(PropertyServiceMapping.EnactmentMode.Local))
-        .filter(this::isCapacityMapping)
-        .collect(Collectors.toList());
-
-      if (false) {
-        final int idx = random.nextInt(mappingList.size());
-        final Set<Mapping<Task, Resource>> result = new HashSet<>();
-        result.add(mappingList.get(idx));
-        return result;
-      } else {
-        return mappingOptions;
-      }
+    return mappingOptions;
   }
 
   /**

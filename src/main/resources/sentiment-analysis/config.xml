@@ -5,7 +5,7 @@
     <property name="delayInSeconds">0</property>
   </module>
   <module class="at.uibk.dps.ee.docker.modules.LocalDockerModule">
-    <property name="usedOs">Unix</property>
+    <property name="usedOs">Windows</property>
   </module>
   <module class="at.uibk.dps.ee.enactables.modules.CoreFunctionsModule"/>
   <module class="at.uibk.dps.ee.io.modules.InputReaderFileModule">

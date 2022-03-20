@@ -42,9 +42,13 @@ public class EdgeScheduleInterpreterUser extends ScheduleInterpreterUser {
         .filter(m -> !PropertyServiceMapping.getEnactmentMode(m).equals(PropertyServiceMapping.EnactmentMode.Local))
         .collect(Collectors.toList());
 
-    if (nonLocalMappings.isEmpty()) {
-      logger.info("mappings local problem");
-    }
+    var edgeMappings = nonLocalMappings.stream()
+      .filter(PsMappingLocalRes::isLocResMapping)
+      .filter(m -> PropertyServiceResource.getUsingTaskIds(m.getTarget()).size() < 4).findFirst();
+
+    var serverlessMappings = scheduleModel.stream()
+      .filter(m -> PropertyServiceMapping.getEnactmentMode(m).equals(EnactmentMode.Serverless))
+      .collect(Collectors.toSet());
 
     var selectedMapping = nonLocalMappings.isEmpty() ?
       scheduleModel.iterator().next() :
